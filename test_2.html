@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script  src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <script>
+        var showPopup = function(url) {
+            var $modal = $('#myModal');
+            var $modalBody = $modal.find('.modal-body');
+
+            var iFrameErrorTimer = setTimeout(function () {
+                $modalBody.html('<h1>Error</h1>');
+            }, 5000);
+
+            var iFrame = $(
+                    '<iframe/>',
+                    {
+                        style: 'display:none; position:relative; min-height:500px',
+                        src: url,
+                        width: '95%',
+                        height: '95%',
+                        load: function() {
+                            $modalBody.find('#loading').remove();
+                            clearTimeout(iFrameErrorTimer);
+                            $(this).show();
+                        }
+                    }
+            );
+
+            $modalBody.html('<h1 id="loading">Loading...</h1>');
+            $modal.modal();
+            $modalBody.append(iFrame);
+        }
+    </script>
+
+    <button class="btn btn-primary center-block" onclick="showPopup('https://geektimes.ru')">Show Popup</button>
+
+    <!--Modal-->
+    <div class="container">
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel" id="myModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="gridSystemModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+</body>
+</html>
